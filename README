@@ -9,3 +9,7 @@ rm public/index.html
 # 2 - init capistrano
 *copy files*
 
+# 3 - init jquery
+rake rails:template LOCATION=https://github.com/lleger/Rails-3-jQuery/raw/master/jquery.rb
+
+

@@ -1,0 +1,8 @@
+
+# Steps:
+
+# 1 - init rails
+rails new . -d mysql --skip-prototype
+bundle install
+rm public/index.html
+

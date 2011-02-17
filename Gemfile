@@ -29,3 +29,7 @@ gem 'capistrano'
 # group :development, :test do
 #   gem 'webrat'
 # end
+# Facebook connection
+gem "koala", "~> 1.0.0.beta"
+#gem "koala-rails"
+

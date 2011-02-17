@@ -4,3 +4,6 @@ log/*.log
 tmp/
 .rvmrc
 config/database.yml
+.DS_Store
+public/system
+config/facebook.yml

@@ -48,7 +48,52 @@ namespace :deploy do
   end
 end
 
+def remote_file_exists?(full_path)
+  'true' ==  capture("if [ -e #{full_path} ]; then echo 'true'; fi").strip
+end
+
+namespace :resque do
+  def resque_pid
+    File.join(current_release,"tmp/pids/resque_worker.pid")
+  end
+
+  def resque_log
+    "log/resque_worker.log"
+  end
+
+  desc "start all resque workers"
+  task :start, :roles => :job do
+    unless remote_file_exists?(resque_pid)
+      run "cd #{release_path}; RAILS_ENV=production QUEUE=* VERBOSE=1 nohup rake resque:work &> #{resque_log}& 2> /dev/null && echo $! > #{resque_pid}"
+    else
+      puts "PID File exits!!"
+    end
+  end
+
+  desc "stop all resque workers"
+  task :stop, :roles => :job do
+    if remote_file_exists?(resque_pid)
+      begin
+        run "kill -s QUIT `cat #{resque_pid}`"
+      rescue
+      end
+      run "rm -f #{resque_pid}"
+    else
+      puts "No PID File found"
+    end
+  end
+
+  desc "restart resque workers"
+  task :restart, :roles => :job do
+    resque.stop
+    resque.start
+  end
+end
 
 after "deploy:update_code" do
   deploy.link_configs
+end
+
+after "deploy:restart" do
+  resque.restart
 end

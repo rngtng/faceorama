@@ -38,5 +38,12 @@ gem "paperclip", "~> 2.3"
 gem "koala", "~> 1.0.0.beta"
 #gem "koala-rails"
 
-
 gem "haml"
+
+# Use resque for async jobs
+gem 'resque'
+#gem 'resque-scheduler'
+
+group :test do
+  gem 'mocha'
+end

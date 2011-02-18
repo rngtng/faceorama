@@ -10,7 +10,7 @@ module ImageCropper
   def self.crop(org_file, x = 0, y = 0, width = nil, height = nil)
     dest_directory = File.dirname(org_file)
     
-    org_file = crop_image(org_file, "#{dest_directory}/cut.jpg", x, y, width, height)
+    org_file = crop_image(org_file, "#{dest_directory}/cut.jpg", x, y, width, height, "493x68")
 
     @files = []
     SMALL[:times].times do |cnt|
@@ -23,10 +23,10 @@ module ImageCropper
   end
 
   private
-  def self.crop_image(in_file, out_file, x, y, width, height)
+  def self.crop_image(in_file, out_file, x, y, width, height, resize = nil)
     image = MiniMagick::Image.open(in_file)
-    image.extract "#{width}x#{height}+#{x}+#{y}"
-    image.resize "493x68" if width.to_i != 493
+    image.crop "#{width}x#{height}!+#{x}+#{y}"
+    image.resize resize if resize
     image.quality 100
     image.write out_file
     out_file

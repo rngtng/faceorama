@@ -3,6 +3,12 @@ class ImagesController < ApplicationController
 
   def show
     @image = Image.find_by_id params[:id]
+
+    render @image
+    # respond_to do |format|
+    #   format.js {  }
+    #   format.html {}
+    # end
   end
 
   def new
@@ -29,11 +35,12 @@ class ImagesController < ApplicationController
   def update
     @image = Image.find_by_id params[:id]
     @image.update_attributes(params[:image])
-    @image.process
+    @image.async_process!
+
     respond_to do |format|
-      format.js { render :text => "<a href='http://www.facebook.com/profile.php?id=#{@image.tag_uid}' target='_blank'>Check</a>" }
+      format.js { render :text => @image.id }
       format.html { redirect_to @image }
-    end    
+    end
   end
 
 end

@@ -64,7 +64,7 @@ namespace :resque do
   desc "start all resque workers"
   task :start, :roles => :job do
     unless remote_file_exists?(resque_pid)
-      run "cd #{release_path}; RAILS_ENV=production QUEUE=* VERBOSE=1 nohup rake resque:work &> #{resque_log}& 2> /dev/null && echo $! > #{resque_pid}"
+      run "cd #{release_path}; RAILS_ENV=production QUEUE=image VERBOSE=1 nohup rake resque:work &> #{resque_log}& 2> /dev/null && echo $! > #{resque_pid}"
     else
       puts "PID File exits!!"
     end

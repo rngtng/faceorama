@@ -43,15 +43,24 @@
         onChange: showCoords
       });
     });
-    
-    $(".edit_image")
-       //.bind('ajax:loading', function() {alert("loading!");})
-       .bind('ajax:success', function(xhr, data, status) {
+
+    $('.edit_image')
+       .bind('ajax:beforeSend', function() {
          $(".crop_area").hide();
-         $(".success_area").html(data);
         })
-       .bind('ajax:failure', function(xhr, status, error) {alert("failure!");})
-       //.bind('ajax:complete', function() {alert("complete!");});
+       .bind('ajax:complete', function() {
+        })
+       .bind('ajax:success', function(xhr, data, status) {
+         $.ajax({
+           url: '/images/' + data,
+           context: document.body,
+           dataType: "html",
+           success: function(data, status){
+             $(".success_area").html(data);
+           }
+         });
+        })
+       .bind('ajax:failure', function(xhr, status, error) {alert("failure!");});
   };
 
   function showCoords(c)
@@ -61,7 +70,4 @@
     jQuery('#image_crop_width').val(c.w);
     jQuery('#image_crop_height').val(c.h);
   };
-
 </script>
-
-

@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20110216224038) do
     t.integer  "crop_y"
     t.integer  "crop_width"
     t.integer  "crop_height"
-    t.integer  "progess"
+    t.integer  "progress"
     t.text     "status"
     t.datetime "created_at"
     t.datetime "updated_at"

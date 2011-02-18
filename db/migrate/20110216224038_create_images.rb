@@ -15,7 +15,7 @@ class CreateImages < ActiveRecord::Migration
       t.integer  :crop_width
       t.integer  :crop_height
 
-      t.integer  :progess
+      t.integer  :progress
       t.text     :status
 
       t.timestamps

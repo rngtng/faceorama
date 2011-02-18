@@ -29,6 +29,11 @@ gem 'capistrano'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+# Image Processing
+gem "mini_magick"
+gem "paperclip", "~> 2.3"
+
 # Facebook connection
 gem "koala", "~> 1.0.0.beta"
 #gem "koala-rails"

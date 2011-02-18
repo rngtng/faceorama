@@ -40,6 +40,7 @@ namespace :deploy do
   desc "Link in the production database.yml"
   task :link_configs do
     run "ln -nfs #{deploy_to}/#{shared_dir}/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/facebook.yml #{release_path}/config/facebook.yml"
   end
 
   [:start, :stop].each do |t|

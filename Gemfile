@@ -38,3 +38,5 @@ gem "paperclip", "~> 2.3"
 gem "koala", "~> 1.0.0.beta"
 #gem "koala-rails"
 
+
+gem "haml"

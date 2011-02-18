@@ -30,6 +30,7 @@ set :ssh_options, :forward_agent => true
 role :app, "#{application}.warteschlange.de"
 role :web, "#{application}.warteschlange.de"
 role :db,  "#{application}.warteschlange.de", :primary => true
+role :job, "#{application}.warteschlange.de"
 
 namespace :deploy do
   desc "Restarting mod_rails with restart.txt"
@@ -65,7 +66,7 @@ namespace :resque do
   desc "start all resque workers"
   task :start, :roles => :job do
     unless remote_file_exists?(resque_pid)
-      run "cd #{release_path}; RAILS_ENV=production QUEUE=image VERBOSE=1 nohup rake resque:work &> #{resque_log}& 2> /dev/null && echo $! > #{resque_pid}"
+      run "cd #{release_path}; RAILS_ENV=production QUEUE=faceorama_image VERBOSE=1 nohup rake resque:work &> #{resque_log}& 2> /dev/null && echo $! > #{resque_pid}"
     else
       puts "PID File exits!!"
     end

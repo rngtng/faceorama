@@ -146,7 +146,7 @@
         this.initDownloadRow = function (event, files, index, xhr, handler, callBack) {
             var json, downloadRow;
             try {
-                json = handler.response = ''; //uploadHandler.parseResponse(xhr);
+                json = handler.response = uploadHandler.parseResponse(xhr);
                 downloadRow = handler.downloadRow = uploadHandler.buildDownloadRow(json);
                 uploadHandler.addNode(uploadHandler.downloadTable, downloadRow, callBack);
             } catch (e) {

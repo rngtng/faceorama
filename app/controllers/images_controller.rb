@@ -1,18 +1,21 @@
 class ImagesController < ApplicationController
-  before_filter :login_required
 
   def show
-    @image = Image.find_by_id params[:id]
+    @image = Image.find_by_id(params[:id]) || Image.new
 
-    render @image
-    # respond_to do |format|
-    #   format.js {  }
-    #   format.html {}
-    # end
+    respond_to do |format|
+      format.js   { render :json => { :uid => facebook_uid, :image => @image } }
+      format.html { render :action => :show }
+    end
   end
 
   def new
     @image = Image.new
+
+    respond_to do |format|
+      format.js   { render :json => { :uid => facebook_uid, :image => @image } }
+      format.html { render :action => :new }
+    end
   end
 
   def create
@@ -22,25 +25,35 @@ class ImagesController < ApplicationController
     @image.save!
 
     respond_to do |format|
-      format.js { render @image }
+      format.js   { render :json => { :uid => facebook_uid, :image => @image } }
       format.html { redirect_to @image }
     end
-  rescue
-    respond_to do |format|
-      format.js { render :text => "ERROR" }
-      format.html { redirect_to images_path }
-    end
+  # rescue => e
+  #   respond_to do |format|
+  #     format.js { render :json => { :error => e.message, :image => @image } }
+  #     format.html { redirect_to images_path }
+  #   end
+  end
+
+  def edit
+    show
   end
 
   def update
     @image = Image.find_by_id params[:id]
-    @image.update_attributes(params[:image])
+    @image.update_attributes params[:image]
+    
     @image.async_process!
 
     respond_to do |format|
-      format.js { render :text => @image.id }
+      format.js   { render :json => { :uid => facebook_uid, :image => @image } }
       format.html { redirect_to @image }
     end
+  #rescue => e
+  #  respond_to do |format|
+  #    format.js { render :json => { :error => e.message, :image => @image } }
+  #    format.html { redirect_to images_path }
+  #  end
   end
 
 end

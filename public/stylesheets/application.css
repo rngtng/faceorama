@@ -1,0 +1,27 @@
+.hidden {
+  display:none;
+}
+
+body.loggedout #login,
+body.loggedin #logout,
+body.loggedin #image {
+  display:block;
+}
+
+#image.new #upload,
+#image.uploaded #crop,
+#image.cropped #process,
+#image.processed #finish
+{
+  display:block;
+}
+
+#logout {
+  width: 100%;
+  text-align: right;
+}
+
+#main { 
+  width: 790px;
+  margin: 0 auto;
+}

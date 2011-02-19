@@ -1,0 +1,34 @@
+#image.hidden{ :class => @image.status }
+  #upload.hidden
+    %h3 Choose a Panoroma Image to upload:
+    = form_for @image, :html => { :multipart => true } do |f|
+      = f.file_field :photo
+      = f.hidden_field :update_progress, :value => 'uploaded'
+
+      %div Upload Image
+
+    %table.upload_files
+
+  #crop.hidden
+    %h3 Select area:
+    = image_tag @image.photo_url
+
+    = form_for @image, :remote => true, :html => {'data-type' => 'json' } do |f|
+      = f.hidden_field :crop_x
+      = f.hidden_field :crop_y
+      = f.hidden_field :crop_width
+      = f.hidden_field :crop_height
+      = f.hidden_field :tag_uid, :value => current_user_id
+      = f.hidden_field :update_progress, :value => 'cropped'
+
+      = f.submit :value => "Crop Image"
+
+  #process.hidden
+    %h3 Wait
+    processing...
+    %progress{ :value => @image.progress, :max => 7 }
+    -# percentage 100%
+
+  #finish.hidden
+    %h2 Done!
+    = link_to "click to check Facebook Profile", @image.profile_url, :target => "_blank"

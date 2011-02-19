@@ -18,7 +18,7 @@ class Image < ActiveRecord::Base
   ##########################################################################################
 
   def async_process!(args = {})
-    update_progress("sheduled")
+    update_progress "sheduled"
     !!Resque.enqueue(Image, self.id, args)
   rescue
     false
@@ -26,28 +26,13 @@ class Image < ActiveRecord::Base
 
   def process!
     files = ImageCropper.crop(self.photo.path, crop_x, crop_y, crop_width, crop_height)
-    update_progress("cropped")
 
-    files.reverse.each do |file|
+    files.reverse.each_with_index do |file, index|
       upload_and_tag(file)
-      update_progress
+      update_progress "uploaded #{index+1}"
     end
 
-    update_progress("finished")
-  end
-
-  ##########################################################################################
-
-  def uploaded?
-    !finished? && !cropped?
-  end
-
-  def cropped?
-    !finished? && !self.crop_x.nil?
-  end
-
-  def finished?
-    self.status == 'finished'
+    update_progress "processed"
   end
 
   ##########################################################################################
@@ -63,11 +48,46 @@ class Image < ActiveRecord::Base
   end
 
   ##########################################################################################
+  def self.serialize_options
+    {}.tap do |options|
+      options[:only] = [:id, :status]
+      options[:methods] = [:progress, :photo_url, :profile_url, :ratio]
+    end
+  end
 
-  def update_progress(msg = nil)
+  def as_json(options = {})
+    super( options.merge(Image.serialize_options) )
+  end
+
+  ##########################################################################################
+
+  def status
+    read_attribute(:status) || 'new'
+  end
+
+  def photo_url
+    self.photo.try(:url)
+  end
+
+  def profile_url
+    self.tag_uid ? "http://www.facebook.com/profile.php?id=#{tag_uid}" : nil
+  end
+
+  def ratio
+    RATIO
+  end
+ ##########################################################################################
+
+  def update_progress=(msg)
+    update_progress(msg)
+  end
+
+  def update_progress(msg)
+    dirty = changed?
     self.progress ||= 0
-    update_attribute(:progress, self.progress + 1)
-    update_attribute(:status, msg) if msg
+    write_attribute(:progress, self.progress + 1)
+    write_attribute(:status, msg)
+    save! if !dirty && !new_record?
   end
 
 end

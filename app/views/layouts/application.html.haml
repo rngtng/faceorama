@@ -1,0 +1,32 @@
+!!! 5
+%html
+  %head
+    %title Faceorama
+    = stylesheet_link_tag :all
+    = javascript_include_tag :defaults
+    = javascript_include_tag :libs
+
+    = csrf_meta_tag
+
+  %body{ :class => logged_in? ? 'loggedin' : 'loggedout' }
+    #logout.hidden
+      = link_to 'Logout', '#', :onclick => "FB.logout(function() { logout() }); return false;"
+
+    #main
+      %h1 Faceorama
+      Pimp your Facebook Profile now!
+      %br
+
+      #login.hidden
+        %h3 Please login first:
+        #jsLogin.section
+          <fb:login-button onlogin="login();start_uploading()" perms="#{facebook_permissions.join(",")}"></fb:login-button>
+
+      = yield
+
+  #fb-root
+  %script{ :src => "http://connect.facebook.net/en_US/all.js" }
+  %script
+    FB.init({ appId: #{facebook_app_id}, cookie: true, status: true, xfbml: true });
+    = yield :scripts
+

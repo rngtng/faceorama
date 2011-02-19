@@ -1,0 +1,4 @@
+= render @image
+
+- content_for :scripts do
+  start_cropping( $.parseJSON('#{@image.as_json.to_json.html_safe}') );

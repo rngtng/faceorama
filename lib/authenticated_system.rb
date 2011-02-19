@@ -4,7 +4,7 @@ protected
   # Preloads @current_user with the user model if they're logged in.
   # current_user is a method, not a local variable
   def logged_in?
-    facebook_session
+    facebook_uid
   end
 
   def current_user_id

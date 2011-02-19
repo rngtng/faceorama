@@ -1,5 +1,9 @@
 class ImagesController < ApplicationController
 
+  def index
+    redirect_to new_image_path
+  end
+
   def show
     @image = Image.find_by_id(params[:id]) || Image.new
 
@@ -28,11 +32,11 @@ class ImagesController < ApplicationController
       format.js   { render :json => { :uid => facebook_uid, :image => @image } }
       format.html { redirect_to @image }
     end
-  # rescue => e
-  #   respond_to do |format|
-  #     format.js { render :json => { :error => e.message, :image => @image } }
-  #     format.html { redirect_to images_path }
-  #   end
+  rescue => e
+    respond_to do |format|
+      format.js { render :json => { :error => e.message, :image => @image } }
+      format.html { redirect_to images_path }
+    end
   end
 
   def edit
@@ -42,18 +46,18 @@ class ImagesController < ApplicationController
   def update
     @image = Image.find_by_id params[:id]
     @image.update_attributes params[:image]
-    
+
     @image.async_process!
 
     respond_to do |format|
       format.js   { render :json => { :uid => facebook_uid, :image => @image } }
       format.html { redirect_to @image }
     end
-  #rescue => e
-  #  respond_to do |format|
-  #    format.js { render :json => { :error => e.message, :image => @image } }
-  #    format.html { redirect_to images_path }
-  #  end
+  rescue => e
+    respond_to do |format|
+      format.js { render :json => { :error => e.message, :image => @image } }
+      format.html { redirect_to images_path }
+    end
   end
 
 end

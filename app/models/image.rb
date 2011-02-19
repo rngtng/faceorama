@@ -26,6 +26,7 @@ class Image < ActiveRecord::Base
 
   def process!
     files = ImageCropper.crop(self.photo.path, crop_x, crop_y, crop_width, crop_height)
+    update_progress "cutted"
 
     files.reverse.each_with_index do |file, index|
       upload_and_tag(file)
@@ -38,7 +39,7 @@ class Image < ActiveRecord::Base
   ##########################################################################################
 
   def upload_and_tag(file)
-    file_hash = { 'path' => file, 'content_type' => 'image/jpeg' }
+    file_hash = { 'path'    => file, 'content_type' => 'image/jpeg' }
     tag       = { 'tag_uid' => self.tag_uid.to_s, :x => 10, :y => 10 }
     api.put_picture(file_hash, {'tags' => [tag].to_json })
   end

@@ -21,13 +21,14 @@
       = f.hidden_field :tag_uid, :value => current_user_id
       = f.hidden_field :update_progress, :value => 'cropped'
 
-      = f.submit :value => "Crop Image"
+      = f.submit :value => "Crop Image and upload to Facebook"
 
   #process.hidden
     %h3 Wait
     processing...
-    %progress{ :value => @image.progress, :max => 8 }
-    -# percentage 100%
+    .file_upload_progress
+      %progress{ :value => @image.progress, :max => 8 }
+      -# percentage 100%
 
   #finish.hidden
     %h2 Done!

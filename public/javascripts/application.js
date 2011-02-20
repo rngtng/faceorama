@@ -4,20 +4,15 @@ function start_uploading() {
     buildUploadRow: function (files, index) {
         var file = files[index];
         return $('<tr><td>' + file.name + '<\/td>' +
-                '<td class="file_upload_progress"><div><\/div><\/td>' +
-                '<td class="file_upload_cancel">' +
-                '<div class="ui-state-default ui-corner-all ui-state-hover" title="Cancel">' +
-                '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
-                '<\/div><\/td><\/tr>');
+                '<td class="file_upload_progress"><div><\/div><\/td><\/tr>');
     },
     onComplete: function (event, files, index, xhr, handler) {
-      var image = handler.response.image;
-      start_cropping(image);
+      start_cropping(handler.response.image, handler.response.facebook_uid);
     }
   });
 }
 
-function start_cropping(image) {
+function start_cropping(image, uid) {
   set_status('uploaded');
   $('#crop')
     .find('img')
@@ -42,12 +37,13 @@ function start_cropping(image) {
         $("#crop").hide();
       })
       .bind('ajax:success', function(xhr, data, status) {
-        var image = data.image;
-        start_processing(image);
+        start_processing(data.image);
       })
       .bind('ajax:failure', function(xhr, status, error) {
         error("No cropping possible");
-      });
+      })
+      .find("input#image_tag_uid")
+        .val(uid);
 }
 
 function start_processing(image) {

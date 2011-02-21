@@ -29,6 +29,12 @@ rake rails:template LOCATION=https://github.com/lleger/Rails-3-jQuery/raw/master
 # Cutting only:
 http://panoramaprofile.com/index.php
 
+# Facebook Banner
+http://www.facebook.com/theprofilebanner
+
+
+http://www.facebookbiz.de/artikel/profil-banner-das-spiel-mit-den-neuen-facebook-profilen
+
 # HowTos:
 http://www.wikihow.com/Make-a-Panoramic-Picture-in-Your-Facebook-Profile
 http://kuettner.it/2010/ein-facebook-panorama-erstellen/

@@ -7,7 +7,7 @@ function start_uploading() {
                 '<td class="file_upload_progress"><div><\/div><\/td><\/tr>');
     },
     onComplete: function (event, files, index, xhr, handler) {
-      start_cropping(handler.response.image, handler.response.facebook_uid);
+      start_cropping(handler.response.image, handler.response.uid);
     }
   });
 }

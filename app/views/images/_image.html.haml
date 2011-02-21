@@ -13,7 +13,7 @@
     %h3 Select area:
     = image_tag @image.photo_url
 
-    = form_for @image, :remote => true, :html => {'data-type' => 'json' } do |f|
+    = form_for @image, :remote => true, :html => { 'data-type' => 'json' } do |f|
       = f.hidden_field :crop_x
       = f.hidden_field :crop_y
       = f.hidden_field :crop_width
@@ -26,9 +26,11 @@
   #process.hidden
     %h3 Wait
     processing...
-    .file_upload_progress
-      %progress{ :value => @image.progress, :max => 8 }
-      -# percentage 100%
+    %table.upload_files
+      %tr
+        %td.file_upload_progress
+          %progress{ :value => @image.progress, :max => 8 }
+          -# percentage 100%
 
   #finish.hidden
     %h2 Done!

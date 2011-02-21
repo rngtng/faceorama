@@ -13,3 +13,23 @@ rm public/index.html
 rake rails:template LOCATION=https://github.com/lleger/Rails-3-jQuery/raw/master/jquery.rb
 
 
+# TODO
+* Find a name
+* Logo, Design
+* Select whom to tag (multiple!?)
+* Add message to uploaded pictures
+* optional add profile pic + instructions + choose profile lines (guess content?)
+* 'live' preview
+* client pic upload to reduce load
+* bring state machine to image -> http://slagyr.github.com/statemachine/example1.html
+* move to heroku
+
+
+# Other projects:
+# Cutting only:
+http://panoramaprofile.com/index.php
+
+# HowTos:
+http://www.wikihow.com/Make-a-Panoramic-Picture-in-Your-Facebook-Profile
+http://kuettner.it/2010/ein-facebook-panorama-erstellen/
+http://www.tripple.net/contator/webwizard/news.asp?nnr=48267

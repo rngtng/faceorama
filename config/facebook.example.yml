@@ -1,14 +1,14 @@
 development:
   app_id:
   secret_key:
-  permissions: user_about_me user_photos publish_stream
+  permissions: user_about_me user_photos publish_stream read_stream
 
 test:
   app_id:
   secret_key:
-  permissions: user_about_me user_photo_video_tags user_photos publish_stream
+  permissions: user_about_me user_photos publish_stream read_stream
 
 production:
   app_id:
   secret_key:
-  permissions: user_about_me user_photo_video_tags user_photos publish_stream
+  permissions: user_about_me user_photos publish_stream read_stream

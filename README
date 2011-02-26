@@ -16,13 +16,15 @@ rake rails:template LOCATION=https://github.com/lleger/Rails-3-jQuery/raw/master
 # TODO
 * Find a name
 * Logo, Design
+* Delete timeline posting
 * Select whom to tag (multiple!?)
-* Add message to uploaded pictures
+* Add proper message to uploaded pictures
 * optional add profile pic + instructions + choose profile lines (guess content?)
 * 'live' preview
 * client pic upload to reduce load
 * bring state machine to image -> http://slagyr.github.com/statemachine/example1.html
-* move to heroku
+* move to heroku !?
+* write tests :-)
 
 
 # Other projects:

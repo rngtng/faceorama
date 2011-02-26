@@ -28,9 +28,15 @@ class Image < ActiveRecord::Base
     files = ImageCropper.crop(self.photo.path, crop_x, crop_y, crop_width, crop_height)
     update_progress "cutted"
 
+    objects = []
     files.reverse.each_with_index do |file, index|
-      upload_and_tag(file)
+      objects << upload_and_tag(file)
       update_progress "uploaded #{index+1}"
+    end
+
+    posting = api.get_connections('me', 'feed').first
+    if objects.select { |o| o["id"] == posting["object_id"] }.any?
+      api.delete_object(posting['id'])
     end
 
     update_progress "processed"
@@ -41,7 +47,7 @@ class Image < ActiveRecord::Base
   def upload_and_tag(file)
     file_hash = { 'path'    => file, 'content_type' => 'image/jpeg' }
     tag       = { 'tag_uid' => self.tag_uid.to_s, :x => 10, :y => 10 }
-    api.put_picture(file_hash, {'tags' => [tag].to_json })
+    api.put_picture(file_hash, {'tags' => [tag].to_json, 'message' => "Uploaded By FaceOrama" })
   end
 
   def api
